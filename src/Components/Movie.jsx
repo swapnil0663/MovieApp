@@ -1,26 +1,17 @@
 import { BASE_URL } from "../utils/BaseUrl";
-import { useState, useEffect } from "react";
+import { useState, useEffect, useContext } from "react";
 import axios from "axios";
 import Paging from "./Paging";
 import MovieCard from "./MovieCard";
+import MovieContext from "../Context/MovieContext";
+import PagingContext from "../Context/PagingContext";
 
-export default function Movie({
-  watchList,
-  addToWatchList,
-  removeFromWatchList,
-}) {
+export default function Movie() {
   const [movies, setMovies] = useState(null);
-  const [pageno, setPage] = useState(1);
+  const { watchList } = useContext(MovieContext);
+  const {pageno} = useContext(PagingContext);
 
-  const handleprev = () => {
-    if (pageno > 1) {
-      setPage(pageno - 1);
-    }
-  };
-
-  const handlenext = () => {
-    setPage(pageno + 1);
-  };
+  
 
   useEffect(() => {
     axios
@@ -47,14 +38,12 @@ export default function Movie({
               fav={watchList.some((movieObj) => movieObj.id === movie.id)}
               title={movie.title}
               poster={BASE_URL + movie.backdrop_path}
-              addToWatchList={addToWatchList}
-              removeFromWatchList={removeFromWatchList}
             />
           );
         })}
       </div>
 
-      <Paging pageno={pageno} handleUp={handlenext} handleDown={handleprev} />
+      <Paging  />
     </>
   );
 }
