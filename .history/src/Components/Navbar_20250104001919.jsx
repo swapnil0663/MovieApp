@@ -1,7 +1,13 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
-    return (
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    
+  },[search])
+  return (
     <div className="flex items-center m-4 w-screen justify-between">
       <div className="flex items-center">
         <img
@@ -17,6 +23,15 @@ export default function Navbar() {
           WatchList
         </Link>
       </div>
+      <input
+      value={search}
+        className=" w-[20rem] bg-slate-100 border p-2 mx-20 rounded-lg"
+        type="text"
+        placeholder="Search Movie"
+        onChange={(e) => {
+            setSearch(e.target.value);  
+        }}
+      />
     </div>
   );
 }

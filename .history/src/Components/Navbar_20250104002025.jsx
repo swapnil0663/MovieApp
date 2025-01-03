@@ -1,7 +1,13 @@
+import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 
 export default function Navbar() {
-    return (
+  const [search, setSearch] = useState("");
+
+  useEffect(() => {
+    
+  },[search])
+  return (
     <div className="flex items-center m-4 w-screen justify-between">
       <div className="flex items-center">
         <img
@@ -17,6 +23,7 @@ export default function Navbar() {
           WatchList
         </Link>
       </div>
+      
     </div>
   );
 }

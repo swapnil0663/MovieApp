@@ -1,5 +1,5 @@
 import { BASE_URL } from "../utils/BaseUrl";
-import { useState, useEffect, useContext } from "react";
+import { useEffect, useContext } from "react";
 import Paging from "./Paging";
 import MovieCard from "./MovieCard";
 import MovieContext from "../Context/MovieContext";
@@ -11,8 +11,6 @@ export default function Movie() {
   const { pageno } = useSelector((store) => store.pagingState);
   const { movies, isLoading, error } = useSelector((store) => store.movieState);
   const dispatch = useDispatch();
-  const [search, setSearch] = useState("");
-
 
   useEffect(() => {
     dispatch(movieThung(pageno));
@@ -40,20 +38,12 @@ export default function Movie() {
   const filteredMovies = movies.filter((movie) =>
     movie.title.toLowerCase().includes(search.toLowerCase())
   );
-
+  
   return (
     <>
-      <div className="flex justify-center my-4">
-        <input
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          placeholder="Search Movies"
-          className="w-[20rem] bg-slate-200 border p-2 rounded-lg"
-        />
-      </div>
       <div className="flex flex-wrap justify-evenly">
-        {filteredMovies.length > 0 ? (
-          filteredMovies.map((movie) => (
+        {movies.map((movie) => {
+          return (
             <MovieCard
               key={movie.id}
               movie={movie}
@@ -61,11 +51,10 @@ export default function Movie() {
               title={movie.title}
               poster={BASE_URL + movie.backdrop_path}
             />
-          ))
-        ) : (
-          <h2 className="text-center text-gray-500">No movies found.</h2>
-        )}
+          );
+        })}
       </div>
+
       <Paging />
     </>
   );
